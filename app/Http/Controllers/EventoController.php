@@ -27,14 +27,18 @@ class EventoController extends Controller
      */
     public function show($id)
     {
-        $evento = Evento::find($id);
-
+        //$evento = Evento::find($id);
         // ⚠ BUG LEGADO: Carrega TODOS os registros da tabela no PHP
-        $perguntas = Pergunta::where('evento_id', $id)
-            ->paginate(50);
+        //$perguntas = Pergunta::where('evento_id', $id)
+        //    ->paginate(50);
+//      return view('eventos.show', compact('evento', 'perguntas'));
+        $perguntas = $evento->perguntas()
+        ->latest()
+        ->paginate(10);
 
-        return view('eventos.show', compact('evento', 'perguntas'));
-    }
+        return view('eventos.show', compact('evento', 'perguntas'));    
+
+}
 
     /**
      * TICKET #001 (BUG LEGADO DE SEGURANÇA):

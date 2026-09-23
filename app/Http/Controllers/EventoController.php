@@ -32,12 +32,20 @@ class EventoController extends Controller
         //$perguntas = Pergunta::where('evento_id', $id)
         //    ->paginate(50);
 //      return view('eventos.show', compact('evento', 'perguntas'));
-        $perguntas = $evento->perguntas()
-        ->latest()
-        ->paginate(10);
+        //$perguntas = $evento->perguntas()
+        //->latest()
+        //->paginate(10);
 
-        return view('eventos.show', compact('evento', 'perguntas'));    
+        //return view('eventos.show', compact('evento', 'perguntas'));    
 
+        $evento = Evento::findOrFail($id);
+
+        $perguntas = Pergunta::with('user')
+            ->where('evento_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('eventos.show', compact('evento', 'perguntas'));
 }
 
     /**

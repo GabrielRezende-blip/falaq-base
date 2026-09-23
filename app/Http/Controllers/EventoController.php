@@ -42,6 +42,7 @@ class EventoController extends Controller
 
         $perguntas = Pergunta::with('user')
             ->where('evento_id', $id)
+            ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
